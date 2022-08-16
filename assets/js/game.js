@@ -3,13 +3,11 @@ var playerHealth = 100;
 var playerAttack = 10;
 var playerMoney = 10;
 
-console.log(playerName, playerAttack, playerHealth);
-
-var enemyRobot = "Sephiroth";
+var enemyRobots = ["Sephiroth", "Salamence", "Apple"];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
-function fight()
+function fight(enemyRobot)
 {
     window.alert("Welcome to Robot Gladiators!");
 
@@ -72,7 +70,9 @@ function fight()
 
 }
 
-
-fight();
+for(var i = 0;i< enemyRobots.length;i++)
+{
+    fight(enemyRobots[i]);
+}
 
 
