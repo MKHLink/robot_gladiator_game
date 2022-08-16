@@ -68,10 +68,19 @@ function fight(enemyRobot)
 
 for(var i = 0;i< enemyRobots.length;i++)
 {
-    var pickedEnemyName = enemyRobots[i];
-    enemyHealth = 50;
+    if(playerHealth>0)
+    {
+        window.alert("Welcome to Robot Gladiators!Round: "+(i+1));
+        var pickedEnemyName = enemyRobots[i];
+        enemyHealth = 50;
 
-    fight(pickedEnemyName);
+        fight(pickedEnemyName);
+    }
+    else
+    {
+        window.alert("You have lost your robor!Game Over!");
+        break;
+    }
 }
 
 
