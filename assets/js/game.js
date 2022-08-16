@@ -9,13 +9,27 @@ var enemyAttack = 12;
 
 function fight(enemyRobot)
 {
-    window.alert("Welcome to Robot Gladiators!");
+    //window.alert("Welcome to Robot Gladiators!");
 
-    var promptFight=window.prompt("Would you like to FIGHT or SKIP this battle?");
+   while(enemyHealth>0 && playerHealth>0)
+   {
+     var promptFight=window.prompt("Would you like to FIGHT or SKIP this battle?");
 
+        if(promptFight==="skip" || promptFight==="SKIP")
+        {
+            //penalty for fight skipping
+            var confirmSkip = window.confirm("Are you sure you want to skip?");
 
-    if(promptFight === "fight" || promptFight ==="FIGHT")
-    {
+            if(confirmSkip)
+            {
+                window.alert(playerName + " has decided to skip fight");
+                playerMoney = playerMoney - 10;
+            
+                console.log(" Player Money: "+playerMoney);
+                break;
+            }
+        }         
+    
         //player turn
         enemyHealth=enemyHealth-playerAttack;
         console.log(
@@ -26,6 +40,7 @@ function fight(enemyRobot)
         if(enemyHealth<=0)
         {
             window.alert(enemyRobot + " has died!");
+            break;
         }
         else
         {
@@ -42,37 +57,21 @@ function fight(enemyRobot)
         if(playerHealth<=0)
         {
             window.alert(playerName+ " has died!");
+            break;
         }
         else
         {
             window.alert(playerName+ " still has "+ playerHealth+ " health left. ");
-        }
-    }
-    else if(promptFight==="skip" || promptFight==="SKIP")
-    {
-       //penalty for fight skipping
-        var confirmSkip = window.confirm("Are you sure you want to skip?");
-
-        if(confirmSkip)
-        {
-            window.alert(playerName + " has decided to skip fight");
-            playerMoney = playerMoney - 2;
-        }
-        else
-        {
-            fight();   
-        }
-    }
-    else
-    {
-        window.alert("You need to choose a valid option. Try again!");
-    }
-
+        } 
+   }
 }
 
 for(var i = 0;i< enemyRobots.length;i++)
 {
-    fight(enemyRobots[i]);
+    var pickedEnemyName = enemyRobots[i];
+    enemyHealth = 50;
+
+    fight(pickedEnemyName);
 }
 
 
