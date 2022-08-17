@@ -66,6 +66,7 @@ function fight(enemyRobot)
    }
 }
 
+//loop that starts the game and sets default values
 function startGame()
 {
     var playerHealth = 100;
@@ -81,6 +82,17 @@ function startGame()
             enemyHealth = 50;
 
             fight(pickedEnemyName);
+
+            //calls shop
+            if( (i<enemyRobots.length-1) && (playerHealth>0) )
+            {
+                var shopConfirm = window.confirm("Would you like to enter the shop?");
+
+                if(shopConfirm)
+                {
+                    shop();
+                }
+            }
         }
         else
         {
@@ -92,6 +104,7 @@ function startGame()
     endGame();
 }
 
+//loop that asks the player of they want to replay
 function endGame()
 {   
     if(playerHealth>0)
@@ -112,6 +125,56 @@ function endGame()
     else
     {
         window.alert("Exiting game");
+    }
+}
+
+//shop function
+
+function shop()
+{
+    var shopPrompt = window.prompt("Enter REFILL for health, UPGRADE for attack boost or LEAVE to exit shop");
+
+    switch(shopPrompt)
+    {
+        case "refill":
+        case "REFILL":
+            if(playerMoney>=7)
+            {
+                window.alert("Refilling health by 20 for 7 gils");
+
+                playerHealth = playerHealth+20;
+                playerMoney = playerMoney-7;
+                break;
+            }
+            else
+            {
+                window.alert("Not enough gils");
+            }
+
+        case "upgrade":
+        case "UPGRADE":
+            if(playerMoney>=7)
+            {
+                window.alert("Upgrading attack by 6 for 7 gils");
+                playerAttack = playerAttack+6;
+                playerMoney = playerMoney-7;
+                break;
+            }
+            else
+            {
+                window.alert("Not enough gils");
+            }
+
+        case "leave":
+        case "LEAVE":
+            window.alert("Left the shop");
+
+            break;
+
+        default:
+            window.alert("Please pick an option");
+            shop();
+            break;
     }
 }
 
