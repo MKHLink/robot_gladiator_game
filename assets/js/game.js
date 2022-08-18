@@ -4,7 +4,7 @@ var playerAttack = 10;
 var playerMoney = 10;
 
 var enemyRobots = ["Sephiroth", "Salamence", "Apple"];
-var enemyHealth = 50;
+var enemyHealth = Math.floor(Math.random() * 60);
 var enemyAttack = 12;
 
 function fight(enemyRobot)
@@ -23,7 +23,7 @@ function fight(enemyRobot)
             if(confirmSkip)
             {
                 window.alert(playerName + " has decided to skip fight");
-                playerMoney = playerMoney - 10;
+                playerMoney = Math.max(0,playerMoney - 10);
             
                 console.log(" Player Money: "+playerMoney);
                 break;
@@ -31,7 +31,8 @@ function fight(enemyRobot)
         }         
     
         //player turn
-        enemyHealth=enemyHealth-playerAttack;
+        var damage = randomNumber(playerAttack-3,playerAttack);
+        enemyHealth=Math.max(0,enemyHealth-damage);
         console.log(
             playerName + " atatcked "+ enemyRobot
             +". "+enemyRobot+ " now has "+ enemyHealth+ " health remaining"
@@ -48,7 +49,8 @@ function fight(enemyRobot)
         }
 
         //ai turn
-        playerHealth=playerHealth-enemyAttack;
+        var damage = randomNumber(enemyAttack-3,enemyAttack);
+        playerHealth=Math.max(0,playerHealth-damage);
         console.log(
             enemyRobot+ " atatcked "+playerName+". "+playerName+ 
         " now has "+playerHealth+ " health ramianing"
@@ -79,7 +81,7 @@ function startGame()
         {
             window.alert("Welcome to Robot Gladiators!Round: "+(i+1));
             var pickedEnemyName = enemyRobots[i];
-            enemyHealth = 50;
+            enemyHealth = randomNumber(40,60);
 
             fight(pickedEnemyName);
 
@@ -178,6 +180,13 @@ function shop()
     }
 }
 
+//random function
+function randomNumber(min,max)
+{
+    var value = Math.floor(Math.random()*(max-min+1)+min);
+
+    return value;
+}
 
 
 startGame();
