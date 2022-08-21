@@ -1,17 +1,59 @@
-var playerName = window.prompt("What is your robot's name?");
-var playerHealth = 100;
-var playerAttack = 10;
-var playerMoney = 10;
+var playerInfo = 
+{
+    name:window.prompt("What is your robot's name?"),
+    health: 100,
+    attack: 10,
+    money: 10,
+    reset:function()
+    {
+        this.health = 100;
+        this.money = 10;
+        this.attack = 10;
+    },
+    refillHealth: function() 
+    {
+        if (this.money >= 7) {
+          window.alert("Refilling player's health by 20 for 7 dollars.");
+          this.health += 20;
+          this.money -= 7;
+        } 
+        else {
+          window.alert("You don't have enough money!");
+        }
+    },
+    upgradeAttack: function() 
+    {
+        if (this.money >= 7) {
+          window.alert("Upgrading player's attack by 6 for 7 dollars.");
+          this.attack += 6;
+          this.money -= 7;
+        } 
+        else {
+          window.alert("You don't have enough money!");
+        }
+    }
+};
 
-var enemyRobots = ["Sephiroth", "Salamence", "Apple"];
-var enemyHealth = Math.floor(Math.random() * 60);
-var enemyAttack = 12;
+var enemyInfo = [
+    {
+        name:"Sephiroth",
+        attack:randomNumber(10,14)
+    },
+    {
+        name: "Goku",
+        attack:randomNumber(10,14)
+    },
+    {
+        name:"meep mop",
+        attack:randomNumber(10,14)
+    }
+];
 
-function fight(enemyRobot)
+function fight(enemy)
 {
     //window.alert("Welcome to Robot Gladiators!");
 
-   while(enemyHealth>0 && playerHealth>0)
+   while(enemy.health>0 && playerInfo.health>0)
    {
      var promptFight=window.prompt("Would you like to FIGHT or SKIP this battle?");
 
@@ -22,48 +64,48 @@ function fight(enemyRobot)
 
             if(confirmSkip)
             {
-                window.alert(playerName + " has decided to skip fight");
-                playerMoney = Math.max(0,playerMoney - 10);
+                window.alert(playerInfo.name + " has decided to skip fight");
+                playerInfo.money = Math.max(0,playerInfo.money - 10);
             
-                console.log(" Player Money: "+playerMoney);
+                console.log(" Player Money: "+playerInfo.money);
                 break;
             }
         }         
     
         //player turn
-        var damage = randomNumber(playerAttack-3,playerAttack);
-        enemyHealth=Math.max(0,enemyHealth-damage);
+        var damage = randomNumber(playerInfo.attack-3,playerInfo.attack);
+        enemy.health=Math.max(0,enemy.health-damage);
         console.log(
-            playerName + " atatcked "+ enemyRobot
-            +". "+enemyRobot+ " now has "+ enemyHealth+ " health remaining"
+            playerInfo.name + " atatcked "+ enemy.name
+            +". "+enemy.name+ " now has "+ enemy.health+ " health remaining"
         );
 
-        if(enemyHealth<=0)
+        if(enemy.health<=0)
         {
-            window.alert(enemyRobot + " has died!");
+            window.alert(enemy.name + " has died!");
             break;
         }
         else
         {
-            window.alert(enemyRobot + " still has "+enemyHealth+ " health left");
+            window.alert(enemy.name + " still has "+enemy.health+ " health left");
         }
 
         //ai turn
-        var damage = randomNumber(enemyAttack-3,enemyAttack);
-        playerHealth=Math.max(0,playerHealth-damage);
+        var damage = randomNumber(enemy.attack-3,enemy.attack);
+        playerInfo.health=Math.max(0,playerInfo.health-damage);
         console.log(
-            enemyRobot+ " atatcked "+playerName+". "+playerName+ 
-        " now has "+playerHealth+ " health ramianing"
+            enemy.name+ " atatcked "+playerInfo.name+". "+playerInfo.name+ 
+        " now has "+playerInfo.health+ " health ramianing"
         );
 
-        if(playerHealth<=0)
+        if(playerInfo.health<=0)
         {
-            window.alert(playerName+ " has died!");
+            window.alert(playerInfo.name+ " has died!");
             break;
         }
         else
         {
-            window.alert(playerName+ " still has "+ playerHealth+ " health left. ");
+            window.alert(playerInfo.name+ " still has "+ playerInfo.health+ " health left. ");
         } 
    }
 }
@@ -71,22 +113,20 @@ function fight(enemyRobot)
 //loop that starts the game and sets default values
 function startGame()
 {
-    var playerHealth = 100;
-    var playerAttack = 10;
-    var playerMoney = 10;
+    playerInfo.reset();
 
-    for(var i = 0;i< enemyRobots.length;i++)
+    for(var i = 0;i< enemyInfo.length;i++)
     {
-        if(playerHealth>0)
+        if(playerInfo.health>0)
         {
             window.alert("Welcome to Robot Gladiators!Round: "+(i+1));
-            var pickedEnemyName = enemyRobots[i];
-            enemyHealth = randomNumber(40,60);
+            var pickedEnemyObj = enemyInfo[i];
+            pickedEnemyObj.health = randomNumber(40,60);
 
-            fight(pickedEnemyName);
+            fight(pickedEnemyObj);
 
             //calls shop
-            if( (i<enemyRobots.length-1) && (playerHealth>0) )
+            if( (i<enemyInfo.length-1) && (playerInfo.health>0) )
             {
                 var shopConfirm = window.confirm("Would you like to enter the shop?");
 
@@ -109,7 +149,7 @@ function startGame()
 //loop that asks the player of they want to replay
 function endGame()
 {   
-    if(playerHealth>0)
+    if(playerInfo.health>0)
     {
         window.alert("Great job you have survived the games! Here is your stats:");
     }
@@ -140,32 +180,13 @@ function shop()
     {
         case "refill":
         case "REFILL":
-            if(playerMoney>=7)
-            {
-                window.alert("Refilling health by 20 for 7 gils");
-
-                playerHealth = playerHealth+20;
-                playerMoney = playerMoney-7;
-                break;
-            }
-            else
-            {
-                window.alert("Not enough gils");
-            }
+            playerInfo.refillHealth();
+            break;
 
         case "upgrade":
         case "UPGRADE":
-            if(playerMoney>=7)
-            {
-                window.alert("Upgrading attack by 6 for 7 gils");
-                playerAttack = playerAttack+6;
-                playerMoney = playerMoney-7;
-                break;
-            }
-            else
-            {
-                window.alert("Not enough gils");
-            }
+           playerInfo.upgradeAttack();
+           break;
 
         case "leave":
         case "LEAVE":
