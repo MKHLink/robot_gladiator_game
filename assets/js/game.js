@@ -162,24 +162,22 @@ function endGame()
 
 function shop()
 {
-    var shopPrompt = window.prompt("Enter REFILL for health, UPGRADE for attack boost or LEAVE to exit shop");
+    var shopPrompt = window.prompt("Enter 1 for REFILL health, 2 for UPGRADE attack boost or 3 to exit shop");
 
+    shopPrompt = parseInt(shopPrompt);
     switch(shopPrompt)
     {
-        case "refill":
-        case "REFILL":
+        case 1:
             playerInfo.refillHealth();
             break;
 
-        case "upgrade":
-        case "UPGRADE":
+        
+        case 2:
            playerInfo.upgradeAttack();
            break;
 
-        case "leave":
-        case "LEAVE":
+        case 3:
             window.alert("Left the shop");
-
             break;
 
         default:
