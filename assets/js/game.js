@@ -51,11 +51,18 @@ var enemyInfo = [
 
 function fight(enemy)
 {
+    var isPlayerTurn = true;
+    if(Math.random() > 0.5)
+    {
+        isPlayerTurn=false;
+    }
     //window.alert("Welcome to Robot Gladiators!");
 
    while(enemy.health>0 && playerInfo.health>0)
    {
       
+    if(isPlayerTurn)
+    {
     if(fightOrSkip())
     {
         break;
@@ -78,6 +85,9 @@ function fight(enemy)
             window.alert(enemy.name + " still has "+enemy.health+ " health left");
         }
 
+    }
+    else
+    {
         //ai turn
         var damage = randomNumber(enemy.attack-3,enemy.attack);
         playerInfo.health=Math.max(0,playerInfo.health-damage);
@@ -95,6 +105,8 @@ function fight(enemy)
         {
             window.alert(playerInfo.name+ " still has "+ playerInfo.health+ " health left. ");
         } 
+    }
+    isPlayerTurn=!isPlayerTurn;
    }
 }
 
